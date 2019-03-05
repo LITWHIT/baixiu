@@ -29,10 +29,10 @@
     <!-- 创建设置菜单选项的数组 -->
     <?php $menu_settings = array('nav-menus', 'slides', 'settings') ?>
     <li <?php echo in_array($current_page, $menu_settings) ? 'class="active"' : '' ?>>
-      <a href="#menu-settings" <?php echo in_array($current_page, $menu_posts) ? 'class' : 'class="collapsed"' ?> data-toggle="collapse">
+      <a href="#menu-settings" <?php echo in_array($current_page, $menu_settings) ? 'class' : 'class="collapsed"' ?> data-toggle="collapse">
         <i class="fa fa-cogs"></i>设置<i class="fa fa-angle-right"></i>
       </a>
-      <ul id="menu-settings" class="collapse <?php echo in_array($current_page, $menu_settings) ? 'in' : '' ?>">
+      <ul id="menu-settings" class="collapse<?php echo in_array($current_page, $menu_settings) ? ' in' : '' ?>">
         <li <?php echo $current_page === 'nav-menus' ? 'class="active"' : '' ?>><a href="nav-menus.php">导航菜单</a></li>
         <li <?php echo $current_page === 'slides' ? 'class="active"' : '' ?>><a href="slides.php">图片轮播</a></li>
         <li <?php echo $current_page === 'settings' ? 'class="active"' : '' ?>><a href="settings.php">网站设置</a></li>
