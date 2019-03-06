@@ -1,30 +1,56 @@
 <?php 
 // 登录页面
 // 简单登录业务逻辑用（用户信息校验, 页面跳转）
+//   数据库连接查询user_info
 // 表单状态保存（保存用户名）
 // 用户状态保存（Cookie、Session）
 
+// 载入配置文件
+require_once '../config.php';
 
 // 判断是否是 POST 请求
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // POST请求， 判断登录框是否输入完整 
   if (empty($_POST['email']) || empty($_POST['password'])) {
-    // 未输入
+    // 未输入info
     $message = '请输入邮箱和密码';
   } else {
     // 接收表单提交的数据
     $email = $_POST['email'];
     $password = $_POST['password'];
     
-    // 用户信息校验(和假数据对比)
-    if ($email === 'admin@demo.com' && $password === 'cc') {
-      // 数据匹配，页面跳转到首页
-      header('Location: ../admin/index.php');
-      exit; // 结束脚本运行
-    } else {
-      // 数据不匹配，提示错误信息
-      $message = '邮箱与密码不匹配';
+    // 用户信息校验(数据库查询,和数据库里的数据对比)
+    // 建立与数据库的连接(连接通道)
+    $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    // 判断是否连接成功
+    if (!$connection) {
+      // 连接失败，提示错误信息
+      die('<h1>Connect Error (' . mysqli_connect_erron() . ')' . mysqli_connect_error() . '</h1>');
     }
+
+    // 根据邮箱查询用户信息， limit 可以提高效率
+    $result = mysqli_query($connection, sprintf("select * from users where email = '%s' limit 1", $email));
+
+    if ($result) {
+      // 查询成功，获取查询结果
+      if ($user = mysqli_fetch_assoc($result)) {
+        // 用户存在，对比密码
+        if ($user['password'] === $password) {
+          // 密码匹配，跳转到首页
+          header('Location: ../admin/index.php');
+          exit; // 结束脚本运行
+        }
+        // 密码不匹配
+        $message = '邮箱与密码不匹配';
+        // 释放资源
+        mysqli_free_result($result);
+      }
+    } else {
+      // 查询失败
+      $message = '该邮箱未注册，请重新输入邮箱';
+    }
+    // 关闭与数据库之间的连接
+    mysqli_close($connection);
   }
 }
 
