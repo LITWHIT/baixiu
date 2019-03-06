@@ -6,7 +6,7 @@
 
 
 // 判断是否是 POST 请求
-if ($_SERVER['REQUEST_MRTHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // POST请求， 判断登录框是否输入完整 
   if (empty($_POST['email']) || empty($_POST['password'])) {
     // 未输入
