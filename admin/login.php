@@ -20,7 +20,7 @@ function login () {
   // 接收表单提交的数据
   $email = $_POST['email'];
   $password = $_POST['password'];
-    
+
   // 用户信息校验(数据库查询,和数据库里的数据对比)
   // 建立与数据库的连接(连接通道)
   $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -68,12 +68,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="utf-8">
   <title>Sign in &laquo; Admin</title>
   <link rel="stylesheet" href="../static/assets/vendors/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="../static/assets/vendors/animate/animate.css">
   <link rel="stylesheet" href="../static/assets/css/admin.css">
 </head>
 <body>
   <div class="login">
     <!-- 补全form标签的属性, action=提交url地址为该文件本身 method=post提交方式-->
-    <form class="login-wrap" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+    <form class="login-wrap<?php echo isset($message) ? ' swing animated' : '' ?>" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
       <img class="avatar" src="../static/assets/img/default.png">
       <!-- 有错误信息时 展示 -->
       <!-- <div class="alert alert-danger">
