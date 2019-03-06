@@ -1,3 +1,11 @@
+<?php
+// 控制访问
+if (empty($_COOKIE['current_login_user'])) {
+  // 没有，跳转到登录页面
+  header('Location: ./login.php');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>

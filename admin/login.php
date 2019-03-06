@@ -36,8 +36,10 @@ function login () {
     if ($user = mysqli_fetch_assoc($result)) {
       // 用户存在，对比密码
       if ($user['password'] === $password) {
+        // 校验通过后，用Cookie保存用户的登录状态
+        setcookie('current_login_user', 'true');
         // 密码匹配，跳转到首页
-        header('Location: ../admin/index.php');
+        header('Location: ./index.php');
         exit; // 结束脚本运行
       }
       // 密码不匹配
