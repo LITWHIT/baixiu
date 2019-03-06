@@ -1,8 +1,19 @@
 <?php
-// 控制访问
-if (empty($_COOKIE['current_login_user'])) {
-  // 没有，跳转到登录页面
+// 访问控制(Cookie)
+// if (empty($_COOKIE['current_login_user'])) {
+//   // 没有Cookie，则跳转到登录页面
+//   header('Location: ./login.php');
+//   exit;
+// }
+
+
+// 启用Session
+session_start();
+// 访问控制
+if (empty($_SESSION['current_login_user'])) {
+  // 没有登录状态，跳转到登录页面
   header('Location: ./login.php');
+  exit;
 }
 ?>
 
